@@ -1,21 +1,34 @@
-import { StatusBar } from 'expo-status-bar';
+
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+import HomeScreen from "./src/screen/HomeScreen";
+import MovieScreen from "./src/screen/MovieScreen";
+import {useFonts} from "expo-font"
+import Apploading from "expo-app-loading"
+
+const Stack = createStackNavigator();
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+const [fontLoaded] = useFonts({ Regular : require("./assets/fonts/Nunito_Sans/NunitoSans-Regular.ttf"),
+  Regular : require("./assets/fonts/Nunito_Sans/NunitoSans-Regular.ttf"),
+  Bold : require("./assets/fonts/Nunito_Sans/NunitoSans-Bold.ttf"),
+  Black : require("./assets/fonts/Nunito_Sans/NunitoSans-Black.ttf"),
+  Extrabold : require("./assets/fonts/Nunito_Sans/NunitoSans-ExtraBold.ttf"),
+  ExtraLight : require("./assets/fonts/Nunito_Sans/NunitoSans-ExtraLight.ttf"),
+  Light : require("./assets/fonts/Nunito_Sans/NunitoSans-Light.ttf"),
+  SemiBold : require("./assets/fonts/Nunito_Sans/NunitoSans-SemiBold.ttf"),
 });
+
+
+  return fontLoaded ? (
+   <NavigationContainer>
+     <Stack.Navigator>
+    <Stack.Screen name="home" component={HomeScreen} options ={{headerShown: false}} />
+    <Stack.Screen name="movie" component={MovieScreen} options ={{headerShown: false}}/>
+     </Stack.Navigator>
+   </NavigationContainer>
+  ) : (<Apploading />);
+};
+
+
